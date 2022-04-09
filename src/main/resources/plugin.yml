@@ -1,0 +1,6 @@
+name: McToQQ
+version: '${project.version}'
+main: net.bluemangoo.mctoqq.McToQQ
+api-version: 1.13
+authors: [ Bluemangoo ]
+description: message between mc and qq
