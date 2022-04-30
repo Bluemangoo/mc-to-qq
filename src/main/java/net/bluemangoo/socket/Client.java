@@ -28,8 +28,6 @@ public class Client {
          BufferedReader br = new BufferedReader(new InputStreamReader(is));
          String mess = br.readLine();
          System.out.println("服务器返回:"+mess);
-      } catch (UnknownHostException e) {
-         e.printStackTrace();
       } catch (IOException e) {
          e.printStackTrace();
       }
