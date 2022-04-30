@@ -1,8 +1,7 @@
 package net.bluemangoo.mctoqq;
 
-import ml.mcos.liteitemshow.TabComplete;
-import ml.mcos.liteitemshow.metrics.Metrics;
-import ml.mcos.liteitemshow.nbt.NMS;
+import net.bluemangoo.mctoqq.metrics.Metrics;
+import net.bluemangoo.mctoqq.nbt.NMS;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Material;
@@ -45,7 +44,6 @@ public class McToQQ extends JavaPlugin implements Listener {
         keyword = getConfig().getString("keyword");
     }
 
-    @SuppressWarnings("NullableProblems")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
@@ -65,7 +63,6 @@ public class McToQQ extends JavaPlugin implements Listener {
         return true;
     }
 
-    @SuppressWarnings("NullableProblems")
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return TabComplete.getCompleteList(args, TabComplete.getTabList(args, command.getName()));

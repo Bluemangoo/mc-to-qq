@@ -1,4 +1,4 @@
-package ml.mcos.liteitemshow.nbt;
+package net.bluemangoo.mctoqq.nbt;
 
 import net.bluemangoo.mctoqq.McToQQ;
 import org.bukkit.inventory.ItemStack;

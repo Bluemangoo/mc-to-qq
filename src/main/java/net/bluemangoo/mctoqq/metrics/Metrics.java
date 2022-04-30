@@ -1,4 +1,4 @@
-package ml.mcos.liteitemshow.metrics;
+package net.bluemangoo.mctoqq.metrics;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -45,7 +45,7 @@ public class Metrics {
      *
      * @param plugin Your plugin instance.
      * @param serviceId The id of the service. It can be found at <a
-     *     href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
+     *     <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
     public Metrics(JavaPlugin plugin, int serviceId) {
         this.plugin = plugin;
@@ -804,7 +804,7 @@ public class Metrics {
         }
 
         /**
-         * Escapes the given string like stated in https://www.ietf.org/rfc/rfc4627.txt.
+         * Escapes the given string like stated in <a href="https://www.ietf.org/rfc/rfc4627.txt">https://www.ietf.org/rfc/rfc4627.txt</a>.
          *
          * <p>This method escapes only the necessary characters '"', '\'. and '\u0000' - '\u001F'.
          * Compact escapes are not used (e.g., '\n' is escaped as "\u000a" and not as "\n").

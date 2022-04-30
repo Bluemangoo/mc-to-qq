@@ -1,4 +1,4 @@
-package ml.mcos.liteitemshow;
+package net.bluemangoo.mctoqq;
 
 import java.util.ArrayList;
 import java.util.Arrays;
