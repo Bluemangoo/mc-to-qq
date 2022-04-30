@@ -1,3 +1,9 @@
+/**
+ * @Author: Bluemangoo
+ * @date: 2022.04
+ * @Copyright: 2022 Bluemangoo. All rights reserved.
+ * @Description: java plugin class
+ */
 package net.bluemangoo.mctoqq;
 
 import net.bluemangoo.mctoqq.metrics.Metrics;
