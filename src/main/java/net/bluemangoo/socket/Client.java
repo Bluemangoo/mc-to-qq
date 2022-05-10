@@ -11,14 +11,17 @@ import java.net.Socket;
 import java.net.UnknownHostException;
  
 public class Client {
-   public static void Trun() {
+   public static void run() {
       try {
-         Socket s = new Socket("127.0.0.1",3093);//端口3093
-         
-         //构建IO
-         InputStream is = s.getInputStream();
-         OutputStream os = s.getOutputStream();
-         
+         InputStream is;
+         OutputStream os;
+         try (Socket s = new Socket("127.0.0.1", 3093)) {
+
+            //构建IO
+            is = s.getInputStream();
+            os = s.getOutputStream();
+         }//端口3093
+
          BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
          //向服务器端发送一条消息
          bw.write("Test,服务器应返回此消息,Test");
