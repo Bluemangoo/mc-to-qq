@@ -6,92 +6,87 @@
  */
 package net.bluemangoo.socket;
 
-import net.bluemangoo.socket.event.GetMSGListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import net.bluemangoo.mctoqq.sendMsg;
 import net.bluemangoo.socket.event.GetMSGServer;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 
-public class Server{
+import org.bukkit.ChatColor;
 
+class ClientMessage {
+    private String QQ;
+    private String Msg;
+    private String Session;
+    private String Name;
+    public String getQQ() {
+        return this.QQ;
+    }
+    public String getMsg() {
+        return this.Msg;
+    }
+    public String getSession() {
+        return this.Session;
+    }
+    public String getName() {
+        return this.Name;
+    }
+}
+public class Server {
+    sendMsg sm = new sendMsg();
     private Collection<GetMSGServer> listeners;
 
     Thread serverThread;
     ArrayList<ConnectClient> connectClientList;
 
-    public void run(){
-        serverThread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-
+    public void run() {
+        serverThread = new Thread(() -> {
+            try {
+                try (ServerSocket ss = new ServerSocket(3093)) {
+                    sm.sendToConsole("启动服务器于3093端口");
+                    while (true) {
+                        Socket s = ss.accept();
+                        sm.sendToConsole("客户端:" + s.getInetAddress() + "已连接到服务器");
+                        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        //读取客户端发送来的消息
+                        String mess = br.readLine();
+                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+                        String retMsg = "";
+                        if (mess.startsWith("mtq-fb|send")) {//判断头，防止无意义消息
+                            //send 发送信息 info 获取游戏/玩家信息(以后肯定做)
+                            Gson gson = new GsonBuilder().create();
+                            ClientMessage cm = gson.fromJson(mess, ClientMessage.class);
+                            if (Long.parseLong(cm.getSession()) >= System.currentTimeMillis() + 15) {//判断传来的session是不是正确的
+                                send(cm.getMsg(), cm.getQQ(), cm.getName());
+                                retMsg = "Success";
+                            }
+                        } else {
+                            retMsg = "Error";
+                        }
+                        bw.write(retMsg);
+                        bw.flush();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         serverThread.start();
     }
-    public void stop(){
-        serverThread=null;
-    }
-    public boolean send(String msg,ConnectClient client){
-        return false;
+
+    public void stop() {
+        serverThread = null;
     }
 
-//    public void run() {
-//        try {
-//            ServerSocket ss = new ServerSocket(3093);
-//            System.out.println("启动服务器于3093端口");
-//            Socket s = ss.accept();
-//            System.out.println("客户端:"+s.getInetAddress().getLocalHost()+"已连接到服务器");
-//
-//            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//            //读取客户端发送来的消息
-//            String mess = br.readLine();
-//            System.out.println("客户端："+mess);
-//            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-//            bw.write(mess+"\n");
-//            bw.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    /**
-     * 添加事件
-     *
-     * @param listener
-     *   addListener
-     */
-    public void addListener(GetMSGServer listener) {
-        if (listeners == null) {
-            listeners = new HashSet<>();
-        }
-        listeners.add(listener);
-    }
-
-    /**
-     * 触发事件
-     */
-    protected void msgGet(Message msg) {
-        if (listeners == null)
-            return;
-        GetMSGServer event = new GetMSGServer(msg);
-        notifyListeners(event);
-    }
-    /**
-     * 通知所有的Listener
-     */
-    private void notifyListeners(GetMSGServer event) {
-        for (GetMSGServer getMSGServer : listeners) {
-            GetMSGListener listener = (GetMSGListener) getMSGServer;
-            listener.getMSGEvent(event);
-        }
+    public void send(String msg, String QQ, String name) {
+        String Message;
+        Message = ChatColor.GOLD + "[QQ]" + ChatColor.RESET + "<" + name + "> " + msg;
+        sm.broadcast(Message);
     }
 }
+
