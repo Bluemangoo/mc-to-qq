@@ -10,6 +10,7 @@ public final class McToQQ extends JavaPlugin {
         //指令
         getCommand("mctoqq").setExecutor(new McToQQ());
         getCommand("mtq").setExecutor(new McToQQ());//别名
+
     }
     @Override
     public void onDisable(){
