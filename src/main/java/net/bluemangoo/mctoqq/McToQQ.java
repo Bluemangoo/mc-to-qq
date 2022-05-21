@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public final class McToQQ extends JavaPlugin {
     @Override
-    public void onEnable(){
+    public void onEnable() {
         try {
             Properties.readProperties();
         } catch (IOException e) {
@@ -20,8 +20,9 @@ public final class McToQQ extends JavaPlugin {
         Objects.requireNonNull(getCommand("mctoqq")).setExecutor(new mctoqq());
         //Objects.requireNonNull(getCommand("mtq")).setExecutor(new mctoqq());
     }
+
     @Override
-    public void onDisable(){
+    public void onDisable() {
         SendMsg.sendToConsole("[mcToQQ] 插件已禁用！");
     }
 }

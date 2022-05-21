@@ -9,7 +9,7 @@ public class TabComplete {
     public static HashMap<String, List<String>> tabListMap = new HashMap<>();
 
     static {
-        tabListMap.put("mcToQQ", Arrays.asList("reload", "version"));
+        tabListMap.put("LiteItemShow", Arrays.asList("reload", "version"));
     }
 
     public static List<String> getTabList(String[] args, String command) {

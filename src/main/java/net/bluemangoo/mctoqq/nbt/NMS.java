@@ -28,7 +28,8 @@ public class NMS {
             NMS_ItemStack = Class.forName(NMSPackage + ".ItemStack");
             if (mcVersion == 12) {
                 NMS_ItemStack_a = NMS_ItemStack.getMethod("a");
-            }} else {
+            }
+        } else {
             NMS_NBTTagCompound = Class.forName("net.minecraft.nbt.NBTTagCompound");
             NMS_ItemStack = Class.forName("net.minecraft.world.item.ItemStack");
         }
@@ -39,6 +40,7 @@ public class NMS {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public String getItemNBT(ItemStack item) {
         try {
             return NMS_ItemStack_save.invoke(OBC_CraftItemStack_asNMSCopy.invoke(OBC_CraftItemStack, item), NMS_NBTTagCompound.newInstance()).toString();
