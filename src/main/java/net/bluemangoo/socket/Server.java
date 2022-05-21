@@ -8,16 +8,28 @@ package net.bluemangoo.socket;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.bluemangoo.mctoqq.sendMsg;
+import net.bluemangoo.data.Properties;
+import net.bluemangoo.mctoqq.SendMsg;
+import net.bluemangoo.socket.event.GetMSGListener;
 import net.bluemangoo.socket.event.GetMSGServer;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+
+import java.util.Iterator;
+
+import static net.bluemangoo.data.Properties.server_port;
+import static org.bukkit.Bukkit.getLogger;
+import static org.bukkit.Bukkit.getServer;
 
 class ClientMessage {
     private String QQ;
@@ -37,12 +49,14 @@ class ClientMessage {
         return this.Name;
     }
 }
+
 public class Server {
     sendMsg sm = new sendMsg();
     private Collection<GetMSGServer> listeners;
 
-    Thread serverThread;
+    //private Thread serverThread;
     ArrayList<ConnectClient> connectClientList;
+    private Thread serverThread;
 
     public void run() {
         serverThread = new Thread(() -> {
@@ -75,18 +89,17 @@ public class Server {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+    public void start(){//运行socket线程
         serverThread.start();
     }
 
-    public void stop() {
-        serverThread = null;
+    public void stop() throws InterruptedException {
+        serverThread.stop();
     }
-
-    public void send(String msg, String QQ, String name) {
+    public boolean send(String msg, String QQ, String name) {
         String Message;
         Message = ChatColor.GOLD + "[QQ]" + ChatColor.RESET + "<" + name + "> " + msg;
-        sm.broadcast(Message);
+        SendMsg.broadcast(Message);
+        return true;
     }
 }
-
