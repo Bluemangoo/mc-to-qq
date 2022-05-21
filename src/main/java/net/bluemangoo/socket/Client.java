@@ -1,33 +1,51 @@
 package net.bluemangoo.socket;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import net.bluemangoo.data.Properties;
+import net.bluemangoo.mctoqq.SendMsg;
+
+import java.io.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
- 
+
+import static net.bluemangoo.data.Properties.*;
+
 public class Client {
-   public static void Trun() {
+   public static void test() {
       try {
-         Socket s = new Socket("127.0.0.1",3093);//端口3093
-         
-         //构建IO
-         InputStream is = s.getInputStream();
-         OutputStream os = s.getOutputStream();
-         
+         InputStream is;
+         OutputStream os;
+         Socket s = new Socket();
+         try (s) {
+            //连接服务器
+            s.connect(new InetSocketAddress(server_ip, server_port), 5000);
+            is = s.getInputStream();
+            os = s.getOutputStream();
+         }
          BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+         SendMsg.sendToConsole("os");
          //向服务器端发送一条消息
-         bw.write("Test,服务器应返回此消息,Test");
-         bw.flush();
-         
+         Long Time = System.currentTimeMillis();
+         String session = String.valueOf(Time);
+         String testS = "mtq-fb|send{\"session\":\""+session+"\",\"QQ\":\"670080772\",\"Msg\":\"Test\"},\"Name\":\"ZUZIE\"";
+         bw.write(testS);
+         SendMsg.sendToConsole("write");
+         //bw.flush();
+         //SendMsg.sendToConsole("shutdownOutput");
+         //s.shutdownOutput();
+         //bw.close();
          //读取服务器返回的消息
          BufferedReader br = new BufferedReader(new InputStreamReader(is));
+         SendMsg.sendToConsole("is");
          String mess = br.readLine();
-         System.out.println("服务器返回:"+mess);
+         SendMsg.sendToConsole("readLine");
+         SendMsg.sendToConsole("[McToQQ] 服务器返回:"+mess);
+         //一堆close
+         br.close();
+         is.close();
+         bw.close();
+         os.close();
+         s.close();
       } catch (IOException e) {
          e.printStackTrace();
       }
