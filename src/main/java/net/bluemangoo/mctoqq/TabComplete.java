@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TabComplete {
-    public static HashMap<String, List<String>> tabListMap = new HashMap<>();
+    public static final HashMap<String, List<String>> tabListMap = new HashMap<>();
 
     static {
-        tabListMap.put("LiteItemShow", Arrays.asList("reload", "version"));
+        tabListMap.put("MCToQQ", Arrays.asList("reload", "version"));
     }
 
     public static List<String> getTabList(String[] args, String command) {

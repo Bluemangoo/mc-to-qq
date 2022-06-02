@@ -12,5 +12,5 @@ import java.util.EventListener;
  * 定义监听接口，负责监听事件
  */
 public interface GetMSGListener extends EventListener {
-    public void getMSGEvent(GetMSGServer event);
+    void getMSGEvent(GetMSGServer event);
 }

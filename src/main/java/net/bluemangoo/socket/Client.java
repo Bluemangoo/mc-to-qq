@@ -22,13 +22,13 @@ public class Client {
                 os = s.getOutputStream();
             }
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
-            SendMsg.sendToConsole("os");
+            SendMsg.log("os");
             //向服务器端发送一条消息
             Long Time = System.currentTimeMillis();
             String session = String.valueOf(Time);
             String testS = "mtq-fb|send{\"session\":\"" + session + "\",\"QQ\":\"670080772\",\"Msg\":\"Test\"},\"Name\":\"ZUZIE\"";
             bw.write(testS);
-            SendMsg.sendToConsole("write");
+            SendMsg.log("write");
             //bw.flush();
             //SendMsg.sendToConsole("shutdownOutput");
             //s.shutdownOutput();
@@ -36,10 +36,10 @@ public class Client {
 
             //读取服务器返回的消息
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            SendMsg.sendToConsole("is");
+            SendMsg.log("is");
             String mess = br.readLine();
-            SendMsg.sendToConsole("readLine");
-            SendMsg.sendToConsole("[McToQQ] 服务器返回:" + mess);
+            SendMsg.log("readLine");
+            SendMsg.log("[McToQQ] 服务器返回:" + mess);
 
             //一堆close
             br.close();

@@ -7,7 +7,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Properties {
@@ -15,16 +14,16 @@ public class Properties {
     public static int server_port;
     public static HashMap<String, Object> settings = new HashMap<>();
 
-    public static void readProperties() throws IOException {
+    public static void readProperties(){
         String path = System.getProperty("user.dir") + "/plugins/mcToQQ/socket.yml";
         if (StringUtils.isNotEmpty(path)) {
             Yaml yaml;
             yaml = new Yaml();
             try {
                 settings = yaml.load(new FileReader(path));
-                SendMsg.sendToConsole(String.valueOf(settings));
+                SendMsg.log(String.valueOf(settings));
                 server_ip = (String) settings.get("server_ip");
-                SendMsg.info(server_ip);
+                SendMsg.log(server_ip);
                 server_port = (int) settings.get("server_port");
                 SendMsg.config(server_ip + " " + server_port);
                 SendMsg.config(ChatColor.GREEN + "[McToQQ] socket.yml 文件读取成功!");

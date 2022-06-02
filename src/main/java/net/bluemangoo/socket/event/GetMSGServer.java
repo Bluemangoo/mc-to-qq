@@ -14,7 +14,7 @@ import java.util.Collection;
 
 public class GetMSGServer extends Event {
     private static final HandlerList handlers = new HandlerList();
-    Message msg;
+    final Message msg;
 
     public GetMSGServer(Message msg) {
         this.msg = msg;
@@ -33,7 +33,7 @@ public class GetMSGServer extends Event {
         return msg;
     }
 
-    public class MSGManager {
+    public static class MSGManager {
         private Collection<GetMSGListener> listeners;
     }
 

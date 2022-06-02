@@ -1,8 +1,8 @@
 package net.bluemangoo.commands;
 
+import net.bluemangoo.data.Share;
 import net.bluemangoo.mctoqq.SendMsg;
 import net.bluemangoo.socket.Client;
-import net.bluemangoo.socket.Socket;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,23 +24,22 @@ public class mctoqq implements CommandExecutor {
                 String Ret = "成功执行此命令！";
                 switch (args[0].toLowerCase()) {
                     case "run": {
-                        Socket.getServer().start();
+                        Share.getServer().start();
                         Ret = "[McToQQ] Socket已运行";
+                        break;
                     }
                     case "stop": {
-                        try {
-                            Socket.getServer().stop();
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        Share.getServer().stop();
                         Ret = "[McToQQ] Socket已停止";
+                        break;
                     }
                     case "test": {
                         Client.test();
                         Ret = "[McToQQ] 开始测试，请查看控制台";
+                        break;
                     }
                 }
-                SendMsg.sendToConsole(Ret);
+                SendMsg.log(Ret);
                 commandSender.sendMessage(ChatColor.GREEN + Ret);
             } else {
                 commandSender.sendMessage(ChatColor.RED + "[McToQQ] 语法错误！");

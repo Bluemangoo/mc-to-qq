@@ -12,8 +12,8 @@ public class NMS {
     Method OBC_CraftItemStack_asNMSCopy;
     Method NMS_ItemStack_save;
     Method NMS_ItemStack_a;
-    McToQQ plugin;
-    int mcVersion;
+    final McToQQ plugin;
+    final int mcVersion;
 
     public NMS(McToQQ plugin) throws Exception {
         this.plugin = plugin;

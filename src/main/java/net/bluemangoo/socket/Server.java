@@ -51,10 +51,10 @@ public class Server {
         serverThread = new Thread(() -> {
             try {
                 try (ServerSocket ss = new ServerSocket(3093)) {
-                    SendMsg.sendToConsole("启动服务器于3093端口");
+                    SendMsg.log("启动服务器于3093端口");
                     while (true) {
                         Socket s = ss.accept();
-                        SendMsg.sendToConsole("客户端:" + s.getInetAddress() + "已连接到服务器");
+                        SendMsg.log("客户端:" + s.getInetAddress() + "已连接到服务器");
                         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
                         //读取客户端发送来的消息
                         String mess = br.readLine();
@@ -85,7 +85,7 @@ public class Server {
         serverThread.start();
     }
 
-    public void stop() throws InterruptedException {
+    public void stop(){
         serverThread=null;
     }
 
